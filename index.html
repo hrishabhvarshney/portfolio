@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hrishabh Varshney — Performance Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --card: #161616;
+    --border: #242424;
+    --accent: #ff5c35;
+    --accent2: #ffb800;
+    --text: #f0ede8;
+    --muted: #888;
+    --mono: 'DM Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text);
+    transition: all 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 57px; left: 0; right: 0;
+    background: rgba(10,10,10,0.98);
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    padding: 1.5rem 5vw 2rem;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 5vw 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,92,53,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,92,53,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,92,53,0.12) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 0.2em;
+  }
+
+  .hero h1 .outline {
+    -webkit-text-stroke: 1.5px var(--text);
+    color: transparent;
+  }
+
+  .hero h1 .accent { color: var(--accent); }
+
+  .hero-sub {
+    max-width: 500px;
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #e04a26;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,92,53,0.35);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--text);
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+  }
+
+  .stat-num .unit {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 5vw;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 200px;
+  }
+
+  /* EXPERIENCE */
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .exp-card:hover {
+    border-color: rgba(255,92,53,0.4);
+    transform: translateX(4px);
+  }
+
+  .exp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-role {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+  }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    background: rgba(255,92,53,0.1);
+    padding: 0.3rem 0.7rem;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.9rem;
+    color: #bbb;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  /* METRICS ROW */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .metric-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .metric-card:hover::after { transform: scaleX(1); }
+  .metric-card:hover { transform: translateY(-4px); border-color: rgba(255,92,53,0.3); }
+
+  .metric-val {
+    font-family: var(--display);
+    font-size: 3rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .metric-val .small { font-size: 1.5rem; }
+
+  .metric-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+  }
+
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: #ccc;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    background: rgba(255,92,53,0.1);
+    border-color: rgba(255,92,53,0.4);
+    color: var(--accent);
+  }
+
+  /* CERTIFICATIONS */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all 0.25s;
+  }
+
+  .cert-card:hover {
+    border-color: rgba(255,184,0,0.4);
+    transform: translateY(-3px);
+  }
+
+  .cert-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255,184,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .cert-issuer {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .project-card:hover {
+    border-color: rgba(255,92,53,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  }
+
+  .project-num {
+    font-family: var(--display);
+    font-size: 4rem;
+    color: rgba(255,92,53,0.08);
+    position: absolute;
+    top: 0.5rem;
+    right: 1.25rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .project-stack {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .stack-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    background: rgba(255,92,53,0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    letter-spacing: 0.06em;
+  }
+
+  .project-name {
+    font-family: var(--display);
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* EDUCATION */
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .edu-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+
+  .edu-item:hover { border-color: rgba(255,92,53,0.3); }
+
+  .edu-year {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    min-width: 80px;
+    padding-top: 2px;
+  }
+
+  .edu-degree {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .edu-school {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.04em;
+  }
+
+  .edu-grade {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent2);
+    margin-top: 0.4rem;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .contact-left h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-left h2 .muted { color: var(--muted); }
+
+  .contact-left p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 380px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s;
+    font-size: 0.9rem;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .contact-link .cl-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(255,92,53,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .contact-link .cl-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    display: block;
+  }
+
+  .contact-link .cl-val {
+    font-size: 0.85rem;
+    margin-top: 1px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-name {
+    font-family: var(--display);
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-name span { color: var(--accent); }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { padding: 7rem 5vw 4rem; }
+    .hero-stats { gap: 2rem; }
+
+    .contact-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    section { padding: 4rem 5vw; }
+
+    .edu-item {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .edu-year { min-width: unset; }
+
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 3.5rem; }
+    .metric-val { font-size: 2.2rem; }
+    .exp-top { flex-direction: column; }
+  }
+
+  /* COUNTER ANIMATION */
+  .count-up { display: inline-block; }
+
+  /* PLATFORM PILLS */
+  .platform-list {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .platform-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    transition: all 0.25s;
+  }
+
+  .platform-pill:hover {
+    border-color: rgba(255,92,53,0.5);
+    color: var(--text);
+  }
+
+  .platform-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">HV<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#experience" class="mobile-nav-link">Experience</a>
+  <a href="#results" class="mobile-nav-link">Results</a>
+  <a href="#skills" class="mobile-nav-link">Skills</a>
+  <a href="#certifications" class="mobile-nav-link">Certs</a>
+  <a href="#projects" class="mobile-nav-link">Projects</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag">Performance Marketing Analyst</div>
+
+  <h1>
+    HRISHABH<br>
+    <span class="outline">VARSH</span><span class="accent">NEY</span>
+  </h1>
+
+  <p class="hero-sub">
+    1.6+ years driving measurable growth across Google Ads, Meta Ads, LinkedIn, and Snapchat —
+    turning ad spend into qualified leads, strong ROAS, and lower CPL.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="#contact" class="btn btn-primary">↗ Let's Connect</a>
+    <a href="#experience" class="btn btn-outline">View Work</a>
+  </div>
+
+  <div class="platform-list">
+    <div class="platform-pill"><span class="platform-dot" style="background:#4285F4"></span> Google Ads</div>
+    <div class="platform-pill"><span class="platform-dot" style="background:#1877F2"></span> Meta Ads</div>
+    <div class="platform-pill"><span class="platform-dot" style="background:#0A66C2"></span> LinkedIn</div>
+    <div class="platform-pill"><span class="platform-dot" style="background:#FFFC00"></span> Snapchat</div>
+    <div class="platform-pill"><span class="platform-dot" style="background:#FF5C35"></span> GA4</div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num"><span class="count-up" data-target="1.6">0</span><span class="unit">+ YRS</span></div>
+      <div class="stat-label">experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="count-up" data-target="6">0</span><span class="unit">x ROAS</span></div>
+      <div class="stat-label">education clients</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="count-up" data-target="80">0</span><span class="unit">+ LEADS</span></div>
+      <div class="stat-label">per month</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">₹<span class="count-up" data-target="20">0</span><span class="unit">L+ SPEND</span></div>
+      <div class="stat-label">managed monthly</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">EXPERIENCE</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-card reveal">
+    <div class="exp-top">
+      <div>
+        <div class="exp-role">Performance Marketing Analyst</div>
+        <div class="exp-company">📍 GenY Medium, Hyderabad</div>
+      </div>
+      <div class="exp-date">OCT 2024 – PRESENT</div>
+    </div>
+    <ul class="exp-bullets">
+      <li>Planned and executed full-funnel paid media campaigns across Google Ads, Meta Ads, LinkedIn, and Snapchat — covering awareness, consideration, and conversion stages.</li>
+      <li>Generated 80+ qualified leads per month for a real estate client through continuous optimization of audience targeting, creatives, and bidding strategies.</li>
+      <li>Delivered 6x ROAS for education clients through performance optimization and funnel improvements.</li>
+      <li>Reduced CPL by 20% through structured A/B testing of creatives, audiences, landing pages, and bidding strategies.</li>
+      <li>Managed ₹20L+ monthly ad spend for a seasonal water park campaign, optimizing for ticket bookings and peak-season performance.</li>
+      <li>Improved conversion rates by 20–25% through audience segmentation, A/B testing, and funnel optimization.</li>
+      <li>Built automated reporting dashboards in Excel and Google Sheets, reducing manual reporting effort by 40%.</li>
+      <li>Handled end-to-end campaign operations including UTM tracking, conversion tracking, naming conventions, and budget pacing.</li>
+    </ul>
+  </div>
+
+  <div class="exp-card reveal">
+    <div class="exp-top">
+      <div>
+        <div class="exp-role">Digital Marketing & Web Intern</div>
+        <div class="exp-company">📍 GenY Medium, Hyderabad</div>
+      </div>
+      <div class="exp-date">JUL 2024 – OCT 2024</div>
+    </div>
+    <ul class="exp-bullets">
+      <li>Assisted in execution, monitoring, and optimization of paid media campaigns across Google Ads and Meta Ads.</li>
+      <li>Supported landing page updates and on-page optimizations to improve conversion performance.</li>
+      <li>Collaborated with marketing and development teams to implement SEO strategies and tracking best practices.</li>
+      <li>Gained hands-on experience with paid media platforms, reporting workflows, and campaign performance analysis.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">RESULTS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card reveal">
+      <div class="metric-val">6<span class="small">×</span></div>
+      <div class="metric-desc">ROAS delivered for<br>education clients</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-val">20<span class="small">%↓</span></div>
+      <div class="metric-desc">Cost per lead<br>reduction via A/B tests</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-val">80<span class="small">+</span></div>
+      <div class="metric-desc">Qualified leads/month<br>for real estate client</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-val">25<span class="small">%↑</span></div>
+      <div class="metric-desc">Conversion rate<br>improvement</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-val">40<span class="small">%</span></div>
+      <div class="metric-desc">Reduction in manual<br>reporting effort</div>
+    </div>
+    <div class="metric-card reveal">
+      <div class="metric-val">₹20<span class="small">L+</span></div>
+      <div class="metric-desc">Monthly ad spend<br>managed</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">SKILLS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">⚡ Performance Marketing</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Google Ads</span>
+        <span class="skill-tag">Meta Ads</span>
+        <span class="skill-tag">LinkedIn Ads</span>
+        <span class="skill-tag">Snapchat Ads</span>
+        <span class="skill-tag">Lead Generation</span>
+        <span class="skill-tag">CRO</span>
+        <span class="skill-tag">A/B Testing</span>
+        <span class="skill-tag">Funnel Optimization</span>
+        <span class="skill-tag">Remarketing</span>
+        <span class="skill-tag">ROAS Optimization</span>
+        <span class="skill-tag">Audience Segmentation</span>
+        <span class="skill-tag">CPL Reduction</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <div class="skill-group-title">📊 Analytics & Reporting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">GA4</span>
+        <span class="skill-tag">Excel Dashboards</span>
+        <span class="skill-tag">Google Sheets Automation</span>
+        <span class="skill-tag">KPI Analysis</span>
+        <span class="skill-tag">UTM Tracking</span>
+        <span class="skill-tag">Conversion Tracking</span>
+        <span class="skill-tag">Budget Pacing</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <div class="skill-group-title">🛠 Web & Technical</div>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Bootstrap</span>
+        <span class="skill-tag">PHP</span>
+        <span class="skill-tag">WordPress</span>
+        <span class="skill-tag">SEO</span>
+        <span class="skill-tag">Git / GitHub</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Python</span>
+      </div>
+    </div>
+
+    <div class="skill-group reveal">
+      <div class="skill-group-title">🔧 Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Google Ads Dashboard</span>
+        <span class="skill-tag">Meta Ads Manager</span>
+        <span class="skill-tag">LinkedIn Campaign Mgr</span>
+        <span class="skill-tag">Visual Studio Code</span>
+        <span class="skill-tag">GA4</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">CERTIFICATIONS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="certs-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🔍</div>
+      <div>
+        <div class="cert-name">Google Ads — Search</div>
+        <div class="cert-issuer">Google · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🖥</div>
+      <div>
+        <div class="cert-name">Google Ads — Display</div>
+        <div class="cert-issuer">Google · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">▶️</div>
+      <div>
+        <div class="cert-name">Google Ads — Video</div>
+        <div class="cert-issuer">Google · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🛍</div>
+      <div>
+        <div class="cert-name">Google Ads — Shopping</div>
+        <div class="cert-issuer">Google · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">📏</div>
+      <div>
+        <div class="cert-name">Google Ads — Measurement</div>
+        <div class="cert-issuer">Google · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">📘</div>
+      <div>
+        <div class="cert-name">Meta — Media Buying / Digital Marketing Associate</div>
+        <div class="cert-issuer">Meta · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">📈</div>
+      <div>
+        <div class="cert-name">Google Analytics (Basic & Advanced)</div>
+        <div class="cert-issuer">Google · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">💾</div>
+      <div>
+        <div class="cert-name">SQL Certification</div>
+        <div class="cert-issuer">HackerRank · Certified</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🌐</div>
+      <div>
+        <div class="cert-name">Responsive Web Development</div>
+        <div class="cert-issuer">Udemy · Completed</div>
+      </div>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-icon">🤖</div>
+      <div>
+        <div class="cert-name">Python for Data Science & ML</div>
+        <div class="cert-issuer">Udemy · Completed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">PROJECTS</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-stack">
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JS</span>
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">WordPress</span>
+      </div>
+      <div class="project-name">Ador Website</div>
+      <p class="project-desc">Developed a fully responsive website for a live client, applying modern UI/UX practices and interactive animations to improve user experience and engagement.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-stack">
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JS</span>
+        <span class="stack-tag">PHP</span>
+        <span class="stack-tag">WordPress</span>
+      </div>
+      <div class="project-name">Help with Assignment</div>
+      <p class="project-desc">Built an education-focused platform for assignment submissions and expert guidance; optimized website speed and UI for improved navigation and user retention.</p>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">03</div>
+      <div class="project-stack">
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">JS</span>
+        <span class="stack-tag">MealDB API</span>
+      </div>
+      <div class="project-name">Recipe Finder</div>
+      <p class="project-desc">Developed a recipe search web app integrating the MealDB API for real-time recipe retrieval with a clean, user-friendly interface.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">EDUCATION</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="edu-list">
+    <div class="edu-item reveal">
+      <div class="edu-year">2020–2024</div>
+      <div>
+        <div class="edu-degree">B.Tech in Information Technology</div>
+        <div class="edu-school">College of Technology, Pantnagar</div>
+        <div class="edu-grade">CGPA: 7.5</div>
+      </div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-year">2018–2019</div>
+      <div>
+        <div class="edu-degree">Intermediate — Class XII</div>
+        <div class="edu-school">S.J.S. Public School, Kasganj</div>
+        <div class="edu-grade">CGPA: 8.06</div>
+      </div>
+    </div>
+    <div class="edu-item reveal">
+      <div class="edu-year">2016–2017</div>
+      <div>
+        <div class="edu-degree">High School — Class X</div>
+        <div class="edu-school">R.K. Public School, Ujhani</div>
+        <div class="edu-grade">CGPA: 10.0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <h2>LET'S<br><span class="muted">WORK</span><br>TOGETHER</h2>
+      <p>Looking for a performance-driven marketer who delivers measurable results? I'd love to hear about your next campaign.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="tel:+918279709553">
+        <div class="cl-icon">📞</div>
+        <div>
+          <span class="cl-label">Phone</span>
+          <span class="cl-val">+91 82797 09553</span>
+        </div>
+      </a>
+      <a class="contact-link" href="mailto:rishi024in@gmail.com">
+        <div class="cl-icon">✉️</div>
+        <div>
+          <span class="cl-label">Email</span>
+          <span class="cl-val">rishi024in@gmail.com</span>
+        </div>
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/rishi240" target="_blank" rel="noopener">
+        <div class="cl-icon">💼</div>
+        <div>
+          <span class="cl-label">LinkedIn</span>
+          <span class="cl-val">linkedin.com/in/rishi240</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">HV<span>.</span> Hrishabh Varshney</div>
+  <div class="footer-copy">© 2025 · Performance Marketing Analyst · Hyderabad</div>
+</footer>
+
+<script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCount(el) {
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    const duration = 1400;
+    const start = performance.now();
+
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = eased * target;
+      el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = isDecimal ? target.toFixed(1) : target;
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        countObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+</script>
+</body>
+</html>
